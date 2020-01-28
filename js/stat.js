@@ -30,18 +30,6 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-var comparesArrays = function () {
-  if (players.length === times.length) {
-    return;
-  }
-
-  if (players.length > times.length) {
-    players = players.slice(0, times.length)
-  } else {
-    times = times.slice(0, players.length)
-  }
-};
-
 function getHsl(h, s, l) {
   h = Math.floor(h);
   s = Math.floor(s);
@@ -57,6 +45,18 @@ var getColorforBar = function (namePlayer) {
 };
 
 window.renderStatistics = function (ctx, players, times) {
+  var comparesArrays = function () {
+    if (players.length === times.length) {
+      return;
+    }
+
+    if (players.length > times.length) {
+      players = players.slice(0, times.length);
+    } else {
+      times = times.slice(0, players.length);
+    }
+  };
+
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
@@ -65,6 +65,8 @@ window.renderStatistics = function (ctx, players, times) {
 
   ctx.fillStyle = '#000';
   ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + (GAP + TEXT_HEIGHT) * 2);
+
+  comparesArrays ();
 
   var maxTime = getMaxElement(times);
 
