@@ -54,7 +54,7 @@ var getColorforBar = function (namePlayer) {//выводит столбик ди
     return 'rgb(255, 0, 0)';
   }
   return getHsl(
-    Math.random() * (300 - 180) + 180,//случайное число от 180 до 300 (Math.random() - случайное от 0 до 1)
+    Math.random() * (250 - 180) + 180,//случайное число от 180 до 300 (Math.random() - случайное от 0 до 1)
     Math.random() * (100 - 50) + 50,
     50
   );
