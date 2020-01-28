@@ -1,22 +1,22 @@
 'use strict';
 
-var CLOUD_WIDTH = 420; //ширина облака со статистикой
-var CLOUD_HEIGHT = 270; //высота облака со статистикой
-var CLOUD_X = 100; //координата по Х верхнего левого угла облака со статистикой
-var CLOUD_Y = 10; //координата по У верхнего левого угла облака со статистикой
-var GAP = 10; //отступ
-var GAP_BETWEEN_BAR = 50; //отступ между колонками
+var CLOUD_WIDTH = 420;
+var CLOUD_HEIGHT = 270;
+var CLOUD_X = 100;
+var CLOUD_Y = 10;
+var GAP = 10;
+var GAP_BETWEEN_BAR = 50;
 var TEXT_HEIGHT = 15;
-var BAR_WIDTH = 40; //ширина столбика гистограммы
-var BAR_HEIGHT = 150; //высота самого большого столбика гистограммы
+var BAR_WIDTH = 40;
+var BAR_HEIGHT = 150;
 
-var renderCloud = function (ctx, x, y, color) { //выводит текст цвета color и рисует прямоугольник
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 }
 
-var getMaxElement = function (arr) {//ищет max массива и возвращает максимальный элемент
-  if (arr.length === 0) {//если массив пустой, возвращает 0
+var getMaxElement = function (arr) {
+  if (arr.length === 0) {
     return 0;
   }
 
@@ -30,7 +30,7 @@ var getMaxElement = function (arr) {//ищет max массива и возвр�
   return maxElement;
 };
 
-var compareArrays = function () { //сравнивает 2 массива. делает их одинаковой длины
+var compareArrays = function () {
   if (players.length === times.length) {
     return;
   }
@@ -42,35 +42,35 @@ var compareArrays = function () { //сравнивает 2 массива. де�
   }
 }
 
-function getHsl(h, s, l) { //получает строку 'hsl()' с округленными к меньшему целому значениями h, s, l
+function getHsl(h, s, l) {
   h = Math.floor(h);
   s = Math.floor(s);
   l = Math.floor(l);
   return 'hsl(' + h + ',' + s + '%' + ',' + l + '%' + ')';
 }
 
-var getColorforBar = function (namePlayer) {//выводит столбик диаграммы с именем Вы красного цвета, остальные - случайных синиx цветов
+var getColorforBar = function (namePlayer) {
   if (namePlayer === 'Вы') {
     return 'rgb(255, 0, 0)';
   }
   return getHsl(
-    Math.random() * (250 - 180) + 180,//случайное число от 180 до 300 (Math.random() - случайное от 0 до 1)
+    Math.random() * (250 - 180) + 180,
     Math.random() * (100 - 50) + 50,
     50
   );
 }
 
 window.renderStatistics = function (ctx, players, times) {
-  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)'); //тень облака со статистикой
-  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff'); //облако со статистикой
+  renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
+  renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
-  ctx.fillStyle = '#000'; //цвет текста
+  ctx.fillStyle = '#000';
   ctx.fillText('Ура, вы победили!',
     CLOUD_X + GAP,
     CLOUD_Y + GAP + TEXT_HEIGHT
   );
 
-  ctx.fillStyle = '#000'; //цвет текста
+  ctx.fillStyle = '#000';
   ctx.fillText('Список результатов:',
     CLOUD_X + GAP,
     CLOUD_Y + (GAP + TEXT_HEIGHT) * 2
@@ -79,12 +79,12 @@ window.renderStatistics = function (ctx, players, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < players.length; i++) {
-    ctx.fillStyle = '#000'; //цвет имени игрока
+    ctx.fillStyle = '#000';
     ctx.fillText(players[i],
       CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i,
       CLOUD_Y + GAP + (TEXT_HEIGHT + GAP) * 3 + BAR_HEIGHT + GAP);
 
-    var differenceHeightMaxBarEndBar = (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime); //считает, на сколько столбец меньше максимального столбца
+    var differenceHeightMaxBarEndBar = (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
 
     ctx.fillStyle = getColorforBar(players[i]);
     ctx.fillRect(
@@ -93,7 +93,7 @@ window.renderStatistics = function (ctx, players, times) {
       BAR_WIDTH,
       (BAR_HEIGHT * times[i]) / maxTime);
 
-    ctx.fillStyle = '#000'; //цвет времени прохождения игры
+    ctx.fillStyle = '#000';
     ctx.fillText(
       Math.round(times[i]),
       CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i,
