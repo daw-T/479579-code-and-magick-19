@@ -66,7 +66,7 @@ window.renderStatistics = function (ctx, players, times) {
   ctx.fillStyle = '#000';
   ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + (GAP + TEXT_HEIGHT) * 2);
 
-  comparesArrays ();
+  comparesArrays();
 
   var maxTime = getMaxElement(times);
 
