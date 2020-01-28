@@ -40,12 +40,7 @@ var compareArrays = function () { //сравнивает 2 массива. де�
   } else {
     times = times.slice(0, players.length)
   }
-  console.log(players, times);
 }
-
-// var getXForBarAndText = function (countPlayers, currentNumberPlayer) { //получает коорд. X столбца диаграммы при равномерном их распределении по ширине
-//   return (CLOUD_X + (CLOUD_WIDTH / countPlayers * currentNumberPlayer) + (CLOUD_WIDTH / countPlayers / 2 - BAR_WIDTH / 2));
-// }
 
 function getHsl(h, s, l) { //получает строку 'hsl()' с округленными к меньшему целому значениями h, s, l
   h = Math.floor(h);
@@ -83,13 +78,11 @@ window.renderStatistics = function (ctx, players, times) {
 
   var maxTime = getMaxElement(times);
 
-  console.log(players, times); //временно, для отладки
-
-  for (var i = 0; i < players.length; i++) { //выводит имя i-го игрока с координатой Х getXForBarAndText(players.length, i)
+  for (var i = 0; i < players.length; i++) {
     ctx.fillStyle = '#000'; //цвет имени игрока
     ctx.fillText(players[i],
-    CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i,
-    CLOUD_Y + GAP + (TEXT_HEIGHT + GAP) * 3 + BAR_HEIGHT + GAP);
+      CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i,
+      CLOUD_Y + GAP + (TEXT_HEIGHT + GAP) * 3 + BAR_HEIGHT + GAP);
 
     var differenceHeightMaxBarEndBar = (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime); //считает, на сколько столбец меньше максимального столбца
 
@@ -107,6 +100,3 @@ window.renderStatistics = function (ctx, players, times) {
       CLOUD_Y + GAP * 2 + (TEXT_HEIGHT + GAP) * 2 + differenceHeightMaxBarEndBar);
   }
 };
-
-
-
