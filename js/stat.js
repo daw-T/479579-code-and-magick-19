@@ -44,16 +44,16 @@ var getColorforBar = function (namePlayer) {
   return getHsl(Math.random() * (250 - 180) + 180, Math.random() * (100 - 50) + 50, 50);
 };
 
-window.renderStatistics = function (ctx, players, times) {
+window.renderStatistics = function (ctx, names, times) {
   var comparesArrays = function () {
-    if (players.length === times.length) {
+    if (names.length === times.length) {
       return;
     }
 
-    if (players.length > times.length) {
-      players = players.slice(0, times.length);
+    if (names.length > times.length) {
+      names = names.slice(0, times.length);
     } else {
-      times = times.slice(0, players.length);
+      times = times.slice(0, names.length);
     }
   };
 
@@ -61,25 +61,29 @@ window.renderStatistics = function (ctx, players, times) {
   renderCloud(ctx, CLOUD_X, CLOUD_Y, '#fff');
 
   ctx.fillStyle = '#000';
+  ctx.font = '16px PT Mono';
   ctx.fillText('Ура, вы победили!', CLOUD_X + GAP, CLOUD_Y + GAP + TEXT_HEIGHT);
 
   ctx.fillStyle = '#000';
+  ctx.font = '16px PT Mono';
   ctx.fillText('Список результатов:', CLOUD_X + GAP, CLOUD_Y + (GAP + TEXT_HEIGHT) * 2);
 
   comparesArrays();
 
   var maxTime = getMaxElement(times);
 
-  for (var i = 0; i < players.length; i++) {
+  for (var i = 0; i < names.length; i++) {
     ctx.fillStyle = '#000';
-    ctx.fillText(players[i], CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i, CLOUD_Y + GAP + (TEXT_HEIGHT + GAP) * 3 + BAR_HEIGHT + GAP);
+    ctx.font = '16px PT Mono';
+    ctx.fillText(names[i], CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i, CLOUD_Y + GAP + (TEXT_HEIGHT + GAP) * 3 + BAR_HEIGHT + GAP);
 
     var differenceHeightMaxBarEndBar = (BAR_HEIGHT - (BAR_HEIGHT * times[i]) / maxTime);
 
-    ctx.fillStyle = getColorforBar(players[i]);
+    ctx.fillStyle = getColorforBar(names[i]);
     ctx.fillRect(CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i, CLOUD_Y + (TEXT_HEIGHT + GAP) * 3 + differenceHeightMaxBarEndBar, BAR_WIDTH, (BAR_HEIGHT * times[i]) / maxTime);
 
     ctx.fillStyle = '#000';
+    ctx.font = '16px PT Mono';
     ctx.fillText(Math.round(times[i]), CLOUD_X + GAP_BETWEEN_BAR + (BAR_WIDTH + GAP_BETWEEN_BAR) * i, CLOUD_Y + GAP * 2 + (TEXT_HEIGHT + GAP) * 2 + differenceHeightMaxBarEndBar);
   }
 };
