@@ -1,9 +1,5 @@
 'use strict';
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-document.querySelector('.setup-similar').classList.remove('hidden');
-
 var similarListElement = document.querySelector('.setup-similar-list');
 var similarWizardTemplate = document.querySelector('#similar-wizard-template')
   .content
@@ -19,7 +15,7 @@ var randomArrayElement = function (arr) {
 };
 
 var getFullName = function (names, surnames) {
-  return randomArrayElement(names) + ' ' + randomArrayElement(surnames);
+  return [names, surnames].map(randomArrayElement).join(' ');
 };
 
 var getCoatColor = function (coat) {
@@ -30,39 +26,34 @@ var getEyesColor = function (eyesColor) {
   return randomArrayElement(eyesColor);
 };
 
-var wizards = [
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_SURNAMES),
-    coatColor: getCoatColor(COAT_COLOR),
-    eyesColor: getEyesColor(EYES_COLOR)
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_SURNAMES),
-    coatColor: getCoatColor(COAT_COLOR),
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_SURNAMES),
-    coatColor: getCoatColor(COAT_COLOR),
-    eyesColor: getEyesColor(EYES_COLOR)
-  },
-  {
-    name: getFullName(WIZARD_NAMES, WIZARD_SURNAMES),
-    coatColor: getCoatColor(COAT_COLOR),
-    eyesColor: getEyesColor(EYES_COLOR)
-  }
-];
-
-var creatWizard = function (item) {
-  item.querySelector('.setup-similar-label').textContent = wizards[i].name;
-  item.querySelector('.wizard-coat').style.fill = wizards[i].coatColor;
-  item.querySelector('.wizard-eyes').style.fill = wizards[i].eyesColor;
-
-  return wizardElement;
+var getObject = function () {
+  return {
+    'name': getFullName(WIZARD_NAMES, WIZARD_SURNAMES),
+    'coatColor': getCoatColor(COAT_COLOR),
+    'eyesColor': getEyesColor(EYES_COLOR)
+  };
 };
 
-for (var i = 0; i < wizards.length; i++) {
+var wizards = [];
+for (var i = 0; i < 4; i++) {
+  wizards[i] = getObject();
+}
+
+var changePropertiesWizard = function (item, wizard) {
+  item.querySelector('.setup-similar-label').textContent = wizard.name;
+  item.querySelector('.wizard-coat').style.fill = wizard.coatColor;
+  item.querySelector('.wizard-eyes').style.fill = wizard.eyesColor;
+};
+
+var fragment = document.createDocumentFragment();
+for (var j = 0; j < wizards.length; j++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  creatWizard(wizardElement);
-  similarListElement.appendChild(wizardElement);
+  changePropertiesWizard(wizardElement, wizards[j]);
+  fragment.appendChild(wizardElement);
 }
+similarListElement.appendChild(fragment);
+
+var userDialog = document.querySelector('.setup');
+userDialog.classList.remove('hidden');
+document.querySelector('.setup-similar').classList.remove('hidden');
