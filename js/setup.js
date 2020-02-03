@@ -34,11 +34,6 @@ var getObject = function () {
   };
 };
 
-var wizards = [];
-for (var i = 0; i < 4; i++) {
-  wizards[i] = getObject();
-}
-
 var changePropertiesWizard = function (item, wizard) {
   item.querySelector('.setup-similar-label').textContent = wizard.name;
   item.querySelector('.wizard-coat').style.fill = wizard.coatColor;
@@ -46,12 +41,13 @@ var changePropertiesWizard = function (item, wizard) {
 };
 
 var fragment = document.createDocumentFragment();
-for (var j = 0; j < wizards.length; j++) {
+for (var i = 0; i < 4; i++) {
   var wizardElement = similarWizardTemplate.cloneNode(true);
 
-  changePropertiesWizard(wizardElement, wizards[j]);
+  changePropertiesWizard(wizardElement, getObject());
   fragment.appendChild(wizardElement);
 }
+
 similarListElement.appendChild(fragment);
 
 var userDialog = document.querySelector('.setup');
